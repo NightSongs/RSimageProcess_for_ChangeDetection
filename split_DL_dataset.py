@@ -30,10 +30,10 @@ def move_data(List, ImageA_Path, ImageB_Path, Label_Path, mode, outputdir):
 
 
 if __name__ == "__main__":
-    ImageA_Path = r"F:\中南院_湖北省变化检测数据\训练数据集\A"
-    ImageB_Path = r"F:\中南院_湖北省变化检测数据\训练数据集\B"
-    Label_Path = r"F:\中南院_湖北省变化检测数据\训练数据集\OUT"
-    outputDir = r"F:\中南院_湖北省变化检测数据\训练数据集\dataset"
+    ImageA_Path = "训练数据集\A"
+    ImageB_Path = "训练数据集\B"
+    Label_Path = "训练数据集\OUT"
+    outputDir = "训练数据集\dataset"
     imageNameList = os.listdir(ImageA_Path)
     train_percent = 0.8
     val_percent = 0.5  # 取出训练集后,test == val, 各50%
