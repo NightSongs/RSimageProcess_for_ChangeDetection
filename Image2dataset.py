@@ -155,10 +155,10 @@ def main(RasterA, RasterB, Label):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--imageA', type=str, default=r"F:\中南院_湖北省变化检测数据\湖北影像数据\湖北2019", help='ImageA path')
-    parser.add_argument('--imageB', type=str, default=r"F:\中南院_湖北省变化检测数据\湖北影像数据\湖北2020", help='ImageB path')
-    parser.add_argument('--label', type=str, default=r"F:\中南院_湖北省变化检测数据\湖北影像数据\湖北2019~2020变化标签", help='Label path')
-    parser.add_argument('--output', type=str, default=r"F:\中南院_湖北省变化检测数据\训练数据集", help='output path')
+    parser.add_argument('--imageA', type=str, default="", help='ImageA path')
+    parser.add_argument('--imageB', type=str, default="", help='ImageB path')
+    parser.add_argument('--label', type=str, default="", help='Label path')
+    parser.add_argument('--output', type=str, default="", help='output path')
     parser.add_argument('--cropsize', type=int, default=256)
     parser.add_argument('--RepetitionRate', type=float, default=0.)
     parser.add_argument('--FalseSample', action='store_true', help='save false sample')
