@@ -47,9 +47,9 @@ def main(shpfile, outPath, Field):
 
 if __name__ == "__main__":
     start = time.time()
-    shapePath = r"F:\国家林业局-变化检测项目\变化图斑\ESRI_shapefile\湖北2019-2020变化图斑.shp"
-    outputPath = r"F:\国家林业局-变化检测项目\变化图斑\ESRI_shapefile\湖北2019-2020各县变化图斑"
-    Field = "c_xianname"
+    shapePath = "a.shp"  # shp path
+    outputPath = "output_path"  # result path
+    Field = "name"  # Field
     main(shapePath, outputPath, Field)
     end = time.time()
     print("用时{}秒".format((end - start)))
