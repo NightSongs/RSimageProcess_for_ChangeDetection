@@ -1,6 +1,6 @@
-from osgeo import gdal
 import os
 import glob
+from osgeo import gdal
 from math import ceil
 from tqdm import tqdm
 
@@ -14,6 +14,7 @@ def GetExtent(infile):
     max_x, min_y = geotrans[0] + xsize * geotrans[1], geotrans[3] + ysize * geotrans[5]
     ds = None
     return min_x, max_y, max_x, min_y
+
 
 def RasterMosaic(file_list, outpath):
     Open = gdal.Open
@@ -32,7 +33,7 @@ def RasterMosaic(file_list, outpath):
     rows = ceil((max_y - min_y) / (-height))  # 行数
 
     driver = gdal.GetDriverByName('GTiff')
-    out_ds = driver.Create(outpath, columns, rows, 3, in_band.DataType)
+    out_ds = driver.Create(outpath, columns, rows, 3, in_band.DataType, options=["TILED=YES", "COMPRESS=LZW", "BIGTIFF=YES"])
     out_ds.SetProjection(in_ds.GetProjection())
     geotrans[0] = min_x  # 更正左上角坐标
     geotrans[3] = max_y
@@ -48,24 +49,10 @@ def RasterMosaic(file_list, outpath):
             out_ds.GetRasterBand(i+1).WriteArray(data, x, y)  # x，y是开始写入时左上角像元行列号
     del in_ds, out_ds
 
-def compress(path, target_path, method="LZW"):  #
-    """使用gdal进行文件压缩，
-          LZW方法属于无损压缩"""
-    dataset = gdal.Open(path)
-    driver = gdal.GetDriverByName('GTiff')
-    driver.CreateCopy(target_path, dataset, strict=1, options=["TILED=YES", "COMPRESS={0}".format(method)])
-    del dataset
 
-#设置路径
-path = r"F:\安化县/"
-resultPath = r"F:\安化县\mosaic/"  #所有拼接结果存放路径
-
-folderList = os.listdir(path)
-for folder in folderList:
-    print("   当前拼接文件夹：", folder, "   ")
-    imageList = glob.glob(path + folder + "**/*.tif")
-    result = resultPath + folder + ".tif"
-    RasterMosaic(imageList, result) #拼接栅格
-    print("   开始压缩栅格   ")
-    compress(result, result.split(".tif")[0]+"_compress.tif") #压缩栅格
-    os.remove(result)  #只保留压缩的栅格
+if __name__ == '__main__':
+    image_path = "image"   #待拼接图片路径
+    result_path = "result"  #拼接结果路径
+    imageList = glob.glob(image_path + "/*.tif")
+    result = os.path.join(result_path, "result.tif")
+    RasterMosaic(imageList, result)
